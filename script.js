@@ -1,8 +1,8 @@
 const ricerca = document.getElementById("ricerca");
 const risultato = document.getElementById("risultato");
-const listaDestra = document.querySelector("#barraDx ul"); // Lista di destra
+const listaDestra = document.querySelector("#barraDx ul");
+const svuotaCarrello = document.getElementById("svuotaCarrello");
 
-// Mappa dei part number e descrizioni
 const mappaRicambi = {
     "500086267": "Filtro Antipolline <br> A-1-1",
     "500086309": "Filtro Antipolline <br> A-1-1",
@@ -11,112 +11,86 @@ const mappaRicambi = {
     "500086330": "Filtro Aria <br> A-1-3",
     "2992300": "Filtro Combustibile <br> A-1-3",
     "2995711": "Filtro Combustibile <br> A-1-3",
-    "42563106": "Elemento Filtro Combustibile <br> A-1-4",
-    "42491185": "Elemento Filtro Combustibile <br> A-1-4",
     "504153481": "Elemento Filtro Sfiato Motore (Blow) <br> A-1-5",
     "2996234": "Guarnizione <br> A-1-5",
     "5801472560": "Vite testa Esagona <br> A-1-5"
 };
 
-// Funzione per evidenziare un elemento nella lista di sinistra
+// Evidenzia il Part Number nella barra sinistra
 function evidenziaPartNumber(pn) {
     const item = document.getElementById(pn);
-    if (item) {
-        item.classList.add("evidenziato");
-    }
+    if (item) item.classList.add("evidenziato");
 }
 
-// Funzione per rimuovere l'evidenziazione dalla lista di sinistra
+// Rimuove l'evidenziazione da un Part Number
 function rimuoviEvidenziazione(pn) {
     const item = document.getElementById(pn);
-    if (item) {
-        item.classList.remove("evidenziato");
-    }
+    if (item) item.classList.remove("evidenziato");
 }
 
-// Funzione per aggiungere un elemento alla lista destra
+// Aggiunge un Part Number alla lista di destra
 function aggiungiAllaListaDestra(partNumber) {
-    // Controlla se l'elemento è già presente nella lista di destra
-    if ([...listaDestra.children].some(item => item.id === `dx-${partNumber}`)) {
-        return; // Se è già presente, non aggiungere nulla
-    }
+    if ([...listaDestra.children].some(item => item.id === `dx-${partNumber}`)) return;
 
-    // Crea un nuovo elemento della lista
     const nuovoElemento = document.createElement("li");
     nuovoElemento.id = `dx-${partNumber}`;
-    nuovoElemento.innerHTML = `${partNumber} <br> ${mappaRicambi[partNumber].split("<br>")[0]} <br> ${mappaRicambi[partNumber].split("<br>")[1]}`; // Mostra la descrizione lunga
-    nuovoElemento.addEventListener("click", () => rimuoviDaListaDestra(partNumber, nuovoElemento)); // Assegna il comportamento di rimozione
+    nuovoElemento.innerHTML = `${partNumber} <br> ${mappaRicambi[partNumber]}`;
+    nuovoElemento.addEventListener("click", () => rimuoviDaListaDestra(partNumber, nuovoElemento));
     listaDestra.appendChild(nuovoElemento);
 
-    // Aggiungi un separatore (hr) dopo ogni elemento
     const separatore = document.createElement("hr");
     listaDestra.appendChild(separatore);
 }
 
-// Funzione per rimuovere un elemento dalla lista destra
+// Rimuove un Part Number dalla lista di destra
 function rimuoviDaListaDestra(partNumber, elemento) {
-    const separatore = elemento.nextElementSibling; // Ottieni il separatore dopo l'elemento
-    listaDestra.removeChild(elemento); // Rimuovi l'elemento dal carrello
-    if (separatore && separatore.tagName === "HR") {
-        listaDestra.removeChild(separatore); // Rimuovi il separatore se esiste
-    }
-    rimuoviEvidenziazione(partNumber); // Rimuovi l'evidenziazione nella lista sinistra
+    const separatore = elemento.nextElementSibling;
+    listaDestra.removeChild(elemento);
+    if (separatore && separatore.tagName === "HR") listaDestra.removeChild(separatore);
+    rimuoviEvidenziazione(partNumber);
 }
 
-// Aggiorna il risultato e gestisce la ricerca
+// Gestisce l'input del campo di ricerca
 ricerca.addEventListener("input", () => {
     const partNumber = ricerca.value.trim();
     if (mappaRicambi[partNumber]) {
         risultato.innerHTML = mappaRicambi[partNumber];
         evidenziaPartNumber(partNumber);
-        aggiungiAllaListaDestra(partNumber); // Aggiungi alla lista destra
+        aggiungiAllaListaDestra(partNumber);
     } else {
         risultato.innerHTML = "Ricambio non trovato,<br> inserisci un Part Number<br> originale Iveco";
-        evidenziaPartNumber(""); // Rimuovi l'evidenziazione
+        evidenziaPartNumber("");
     }
 });
 
-// Gestione del clic sugli elementi della lista sinistra
+// Gestisce i clic sugli elementi della barra sinistra
 function gestisciClicElementoLista() {
     const allItems = document.querySelectorAll("#barraSx li");
     allItems.forEach(item => {
         item.addEventListener("click", () => {
-            const partNumber = item.id; // Usa l'ID come Part Number
-            ricerca.value = partNumber; // Simula l'inserimento nell'input
+            const partNumber = item.id;
+            ricerca.value = partNumber;
             if ([...listaDestra.children].some(item => item.id === `dx-${partNumber}`)) {
-                // Se il partNumber è già nel carrello, rimuovilo
                 const elementoDaRimuovere = document.getElementById(`dx-${partNumber}`);
                 rimuoviDaListaDestra(partNumber, elementoDaRimuovere);
             } else {
                 if (mappaRicambi[partNumber]) {
                     risultato.innerHTML = mappaRicambi[partNumber];
                     evidenziaPartNumber(partNumber);
-                    aggiungiAllaListaDestra(partNumber); // Aggiungi alla lista destra
+                    aggiungiAllaListaDestra(partNumber);
                 } else {
                     risultato.innerHTML = "Ricambio non trovato,<br> inserisci un Part Number<br> originale Iveco";
-                    evidenziaPartNumber(""); // Rimuovi l'evidenziazione
+                    evidenziaPartNumber("");
                 }
             }
         });
     });
 }
 
-// Seleziona il pulsante
-const svuotaCarrello = document.getElementById("svuotaCarrello");
+gestisciClicElementoLista();
 
-// Funzione per svuotare il carrello
-function svuotaListaDestra() {
-    // Rimuovi tutti gli elementi dalla lista di destra
+// Svuota la lista di destra e rimuove le evidenziazioni
+svuotaCarrello.addEventListener("click", () => {
     listaDestra.innerHTML = "";
-
-    // Rimuovi l'evidenziazione da tutti gli elementi della lista sinistra
-    const evidenziati = document.querySelectorAll("#barraSx .evidenziato");
-    evidenziati.forEach(item => item.classList.remove("evidenziato"));
-}
-
-// Aggiungi l'evento al pulsante
-svuotaCarrello.addEventListener("click", svuotaListaDestra);
-
-
-// Inizializza gli eventi al caricamento della pagina
-document.addEventListener("DOMContentLoaded", gestisciClicElementoLista);
+    document.querySelectorAll("#barraSx .evidenziato").forEach(el => el.classList.remove("evidenziato"));
+});

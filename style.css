@@ -2,16 +2,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* Aggiunto per evitare overflow causato da padding e bordi */
     user-select: none;
 }
 
 html,
 body {
     width: 100%;
-    /* Impostato a 100% per evitare overflow della pagina */
     overflow-x: hidden;
-    /* Impedisce lo scrolling orizzontale che potrebbe causare la striscia bianca */
 }
 
 main {
@@ -49,6 +46,11 @@ section {
     width: 20%;
     background-color: rgb(71, 71, 234);
     position: absolute;
+    overflow-y: auto;
+    /* Abilita lo scorrimento verticale */
+    padding: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #aaa transparent;
 }
 
 #barraSx {
@@ -60,58 +62,23 @@ section {
     right: 0;
     top: 0;
     display: flex;
-    /* Imposta flexbox */
     flex-direction: column;
-    /* Elementi disposti in colonna */
     align-items: center;
-    /* Centra il pulsante orizzontalmente */
     padding-top: 10px;
-    /* Aggiungi un po' di spazio in alto */
 }
 
 #barraDx ul li {
     cursor: pointer;
+    /* Ripristina il comportamento del cursore */
     margin-bottom: 5px;
-    /* Spazio ridotto tra gli elementi */
     padding: 5px 0;
-    /* Meno spazio interno */
 }
-
-#svuotaCarrello {
-    width: 80%;
-    /* Riduci la larghezza per lasciare spazio ai margini */
-    margin: 10px auto;
-    /* Centra il pulsante sia orizzontalmente che verticalmente */
-    padding: 10px;
-    font-size: 1em;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#svuotaCarrello:hover {
-    background-color: darkred;
-}
-
 
 ul {
     list-style-type: none;
     line-height: 2.5;
     font-size: 1.5em;
     padding: 5px;
-}
-
-#barraDx ul hr {
-    margin: 0;
-    /* Rimuovi il margine sopra e sotto l'hr */
-}
-
-hr {
-    border: 1px solid #ccc;
-    margin: 10px 0;
 }
 
 #barraSx li {
@@ -128,23 +95,49 @@ hr {
     color: #fff;
 }
 
-/* Responsività per dispositivi con schermi piccoli */
+#svuotaCarrello {
+    width: 80%;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 1em;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#svuotaCarrello:hover {
+    background-color: darkred;
+}
+
+section::-webkit-scrollbar {
+    width: 8px;
+}
+
+section::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 5px;
+}
+
+section::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
 @media screen and (max-width: 1000px) {
     section {
         display: none;
-        /* Nasconde le barre laterali su dispositivi con schermo piccolo */
     }
 
     main {
         padding: 10px;
         font-size: 1em;
         width: 100%;
-        /* Assicura che main usi tutta la larghezza disponibile */
     }
 
     input {
         width: 100%;
         max-width: 350px;
-        /* Imposta una larghezza massima per l'input */
     }
 }
