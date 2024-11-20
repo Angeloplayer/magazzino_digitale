@@ -1,0 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+main {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    /* Allinea il contenuto in alto */
+    background-color: rgb(158, 177, 196);
+    color: rgb(71, 71, 234);
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.5;
+    padding-top: 5%;
+    /* Aggiunge margine in alto per sollevare il contenuto */
+}
+
+input {
+    width: 80%;
+    max-width: 300px;
+    padding: 17px;
+    border-radius: 15px;
+    border-color: blue;
+    margin-top: 10%;
+    font-size: 1.1em;
+    position: relative;
+    /* Imposta la posizione dell'input come relativa */
+    z-index: 1;
+    /* Assicura che l'input stia sopra i suggerimenti */
+}
+
+label {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+section {
+    height: 100vh;
+    width: 20%;
+    background-color: rgb(71, 71, 234);
+    position: absolute;
+    overflow-y: auto;
+    padding: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #aaa transparent;
+}
+
+#barraSx {
+    left: 0;
+    top: 0;
+}
+
+#barraDx {
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+}
+
+#barraDx ul li {
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 5px 0;
+}
+
+ul {
+    list-style-type: none;
+    line-height: 2.5;
+    font-size: 1.5em;
+    padding: 5px;
+}
+
+#barraSx li {
+    transition: background-color 0.3s ease;
+}
+
+#barraSx li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.evidenziato {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+#svuotaCarrello {
+    width: 80%;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 1em;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#svuotaCarrello:hover {
+    background-color: darkred;
+}
+
+section::-webkit-scrollbar {
+    width: 8px;
+}
+
+section::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 5px;
+}
+
+section::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+#suggestions {
+    list-style-type: none;
+
+    width: 80%;
+    max-width: 300px;
+    background-color: white;
+    /* Allinea la lista a sinistra dell'input */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    /* Aggiungi un'ombra per i suggerimenti */
+}
+
+#suggestions li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+#suggestions li:hover {
+    background-color: rgba(71, 71, 234, 0.2);
+}
+
+@media screen and (max-width: 1000px) {
+    section#barraDx {
+        display: none;
+    }
+
+    section {
+        display: none;
+    }
+
+    main {
+        padding: 10px;
+        font-size: 1em;
+        width: 100%;
+    }
+
+    input {
+        width: 100%;
+        max-width: 350px;
+    }
+}
