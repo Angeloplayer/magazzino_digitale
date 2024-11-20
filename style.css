@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Aggiunto per evitare overflow causato da padding e bordi */
+    user-select: none;
+}
+
+html,
+body {
+    width: 100%;
+    /* Impostato a 100% per evitare overflow della pagina */
+    overflow-x: hidden;
+    /* Impedisce lo scrolling orizzontale che potrebbe causare la striscia bianca */
+}
+
+main {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(158, 177, 196);
+    color: rgb(71, 71, 234);
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.5;
+}
+
+input {
+    width: 80%;
+    max-width: 300px;
+    padding: 20px;
+    border-radius: 15px;
+    border-color: blue;
+    margin-top: 10%;
+    font-size: 1.1em;
+}
+
+label {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+section {
+    height: 100vh;
+    width: 20%;
+    background-color: rgb(71, 71, 234);
+    position: absolute;
+}
+
+#barraSx {
+    left: 0;
+    top: 0;
+}
+
+#barraDx {
+    right: 0;
+    top: 0;
+}
+
+#barraDx ul li {
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    line-height: 2.5;
+    font-size: 1.5em;
+    padding: 5px;
+}
+
+#barraSx li {
+    transition: background-color 0.3s ease;
+}
+
+#barraSx li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.evidenziato {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+/* Responsività per dispositivi con schermi piccoli */
+@media screen and (max-width: 1000px) {
+    section {
+        display: none;
+        /* Nasconde le barre laterali su dispositivi con schermo piccolo */
+    }
+
+    main {
+        padding: 10px;
+        font-size: 1em;
+        width: 100%;
+        /* Assicura che main usi tutta la larghezza disponibile */
+    }
+
+    input {
+        width: 100%;
+        max-width: 350px;
+        /* Imposta una larghezza massima per l'input */
+    }
+}
