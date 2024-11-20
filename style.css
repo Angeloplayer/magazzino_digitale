@@ -59,6 +59,14 @@ section {
 #barraDx {
     right: 0;
     top: 0;
+    display: flex;
+    /* Imposta flexbox */
+    flex-direction: column;
+    /* Elementi disposti in colonna */
+    align-items: center;
+    /* Centra il pulsante orizzontalmente */
+    padding-top: 10px;
+    /* Aggiungi un po' di spazio in alto */
 }
 
 #barraDx ul li {
@@ -68,6 +76,26 @@ section {
     padding: 5px 0;
     /* Meno spazio interno */
 }
+
+#svuotaCarrello {
+    width: 80%;
+    /* Riduci la larghezza per lasciare spazio ai margini */
+    margin: 10px auto;
+    /* Centra il pulsante sia orizzontalmente che verticalmente */
+    padding: 10px;
+    font-size: 1em;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#svuotaCarrello:hover {
+    background-color: darkred;
+}
+
 
 ul {
     list-style-type: none;

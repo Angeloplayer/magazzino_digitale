@@ -101,5 +101,22 @@ function gestisciClicElementoLista() {
     });
 }
 
+// Seleziona il pulsante
+const svuotaCarrello = document.getElementById("svuotaCarrello");
+
+// Funzione per svuotare il carrello
+function svuotaListaDestra() {
+    // Rimuovi tutti gli elementi dalla lista di destra
+    listaDestra.innerHTML = "";
+
+    // Rimuovi l'evidenziazione da tutti gli elementi della lista sinistra
+    const evidenziati = document.querySelectorAll("#barraSx .evidenziato");
+    evidenziati.forEach(item => item.classList.remove("evidenziato"));
+}
+
+// Aggiungi l'evento al pulsante
+svuotaCarrello.addEventListener("click", svuotaListaDestra);
+
+
 // Inizializza gli eventi al caricamento della pagina
 document.addEventListener("DOMContentLoaded", gestisciClicElementoLista);
