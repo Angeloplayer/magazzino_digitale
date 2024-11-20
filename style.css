@@ -63,6 +63,10 @@ section {
 
 #barraDx ul li {
     cursor: pointer;
+    margin-bottom: 5px;
+    /* Spazio ridotto tra gli elementi */
+    padding: 5px 0;
+    /* Meno spazio interno */
 }
 
 ul {
@@ -70,6 +74,11 @@ ul {
     line-height: 2.5;
     font-size: 1.5em;
     padding: 5px;
+}
+
+#barraDx ul hr {
+    margin: 0;
+    /* Rimuovi il margine sopra e sotto l'hr */
 }
 
 hr {
