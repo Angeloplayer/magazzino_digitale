@@ -36,25 +36,30 @@ function rimuoviEvidenziazione(pn) {
 
 // Funzione per aggiungere un elemento alla lista destra
 function aggiungiAllaListaDestra(partNumber) {
-    // Controlla se l'elemento è già presente
+    // Controlla se l'elemento è già presente nella lista di destra
     if ([...listaDestra.children].some(item => item.id === `dx-${partNumber}`)) {
-        return; // Se esiste già, non fare nulla
+        return; // Se è già presente, non aggiungere nulla
     }
 
     // Crea un nuovo elemento della lista
     const nuovoElemento = document.createElement("li");
     nuovoElemento.id = `dx-${partNumber}`;
-    nuovoElemento.innerHTML = `${partNumber} - ${mappaRicambi[partNumber].split("<br>")[0]} <br>Posizione: ${mappaRicambi[partNumber].split("<br>")[1]}`; // Mostra descrizione breve e posizione
+    nuovoElemento.innerHTML = `${partNumber} <br> ${mappaRicambi[partNumber].split("<br>")[0]} <br> ${mappaRicambi[partNumber].split("<br>")[1]}`; // Mostra la descrizione lunga
     nuovoElemento.addEventListener("click", () => rimuoviDaListaDestra(partNumber, nuovoElemento)); // Assegna il comportamento di rimozione
     listaDestra.appendChild(nuovoElemento);
 
-    // Evidenzia l'elemento nella lista di sinistra
-    evidenziaPartNumber(partNumber);
+    // Aggiungi un separatore (hr) dopo ogni elemento
+    const separatore = document.createElement("hr");
+    listaDestra.appendChild(separatore);
 }
 
 // Funzione per rimuovere un elemento dalla lista destra
 function rimuoviDaListaDestra(partNumber, elemento) {
+    const separatore = elemento.nextElementSibling; // Ottieni il separatore dopo l'elemento
     listaDestra.removeChild(elemento); // Rimuovi l'elemento dal carrello
+    if (separatore && separatore.tagName === "HR") {
+        listaDestra.removeChild(separatore); // Rimuovi il separatore se esiste
+    }
     rimuoviEvidenziazione(partNumber); // Rimuovi l'evidenziazione nella lista sinistra
 }
 
@@ -78,13 +83,19 @@ function gestisciClicElementoLista() {
         item.addEventListener("click", () => {
             const partNumber = item.id; // Usa l'ID come Part Number
             ricerca.value = partNumber; // Simula l'inserimento nell'input
-            if (mappaRicambi[partNumber]) {
-                risultato.innerHTML = mappaRicambi[partNumber];
-                evidenziaPartNumber(partNumber);
-                aggiungiAllaListaDestra(partNumber); // Aggiungi alla lista destra
+            if ([...listaDestra.children].some(item => item.id === `dx-${partNumber}`)) {
+                // Se il partNumber è già nel carrello, rimuovilo
+                const elementoDaRimuovere = document.getElementById(`dx-${partNumber}`);
+                rimuoviDaListaDestra(partNumber, elementoDaRimuovere);
             } else {
-                risultato.innerHTML = "Ricambio non trovato,<br> inserisci un Part Number<br> originale Iveco";
-                evidenziaPartNumber(""); // Rimuovi l'evidenziazione
+                if (mappaRicambi[partNumber]) {
+                    risultato.innerHTML = mappaRicambi[partNumber];
+                    evidenziaPartNumber(partNumber);
+                    aggiungiAllaListaDestra(partNumber); // Aggiungi alla lista destra
+                } else {
+                    risultato.innerHTML = "Ricambio non trovato,<br> inserisci un Part Number<br> originale Iveco";
+                    evidenziaPartNumber(""); // Rimuovi l'evidenziazione
+                }
             }
         });
     });
